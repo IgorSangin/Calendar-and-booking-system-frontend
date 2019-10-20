@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import 'antd/dist/antd.css';
 import {
   Form,
   Input,
@@ -31,7 +31,7 @@ class RegistrationForm extends React.Component {
         //here we should send a request to our server to post the user
 
         //use fetch API to post the user data
-        fetch('http://localhost:3000/api/v1.0/users', {
+        fetch('http://localhost:3000/api/users', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -52,10 +52,6 @@ class RegistrationForm extends React.Component {
       }
     });
   };
-
-  handleEmail = ()=> {
-    this.setState({responseStatus:"nothing"})
-  }
 
   handleConfirmBlur = e => {
     const { value } = e.target;
@@ -126,26 +122,19 @@ class RegistrationForm extends React.Component {
       },
     };
     
-    //prefix the email input with some decoration 
-    const prefixEmail = getFieldDecorator('email')(
-      <h4>@</h4>,
-    );
+
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="E-mail" hasFeedback validateStatus={this.state.responseStatus} help={this.state.errorMessage}>
-          {getFieldDecorator('email', {
+        <Form.Item label="Username">
+          {getFieldDecorator('username', {
             rules: [
               {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
                 required: true,
-                message: 'Please input your E-mail!',
-              },
-            ],
-          })(<Input addonBefore={prefixEmail} onChange={this.handleEmail} />)}
+                message: 'Please input your username!',
+                whitespace: true },
+              ],
+          })(<Input />)}
         </Form.Item>
         <Form.Item label="Password" hasFeedback>
           {getFieldDecorator('password', {
