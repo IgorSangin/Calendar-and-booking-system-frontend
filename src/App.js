@@ -1,18 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import React, {Component} from 'react';
+import {BrowserRouter, Route} from 'react-router-dom'
 import Signup from './components/Signup';
+import Login from './components/Login';
 import './App.css';
 
-function App() {
-
-
-  return (
-    <div style={{ background: '#ECECEC', padding: '30px' }}>
-      
-      <Signup />
-      
-    </div>
-  );
+class App extends Component {
+  render() {
+    return(
+      <BrowserRouter>
+        <div classname="App">
+          <Route exact path='/' component={Login} />
+          <Route path='/Signup' component={Signup} />
+        </div>
+      </BrowserRouter>
+    )
+  }
 }
 
 export default App;

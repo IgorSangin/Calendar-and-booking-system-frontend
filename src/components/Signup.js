@@ -179,6 +179,7 @@ class RegistrationForm extends React.Component {
           <Button type="primary" htmlType="submit">
             Register
           </Button>
+          Or <a href="/">login here if you already have an account</a>
         </Form.Item>
         {this.state.showSuccess ? <Alert message="account created successfully" type="success" /> :null}
         {this.state.showError ? <Alert message={this.state.errorMessage} type="error" /> :null}
