@@ -1,4 +1,5 @@
-.App {
+@import '~antd/dist/antd.css';
+/* .App {
   text-align: center;
 }
 
@@ -19,4 +20,13 @@
 
 .App-link {
   color: #09d3ac;
+} */
+
+nav{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height:10vh;
+  background:rgb(73,79,82);
+  color: white;
 }
