@@ -19,18 +19,23 @@ class CommentList extends React.Component{
             </>
         })
 
+        return <div>
+            <li>
+                <ul>
+                    {comment}
+                </ul>
+            </li>
+        </div>
         
     }
 
     render(){
-        return <div>
-            <li>
-                <ul>
-                    {this.printComments()}
-                </ul>
-            </li>
-        </div>
+        let comments = [];
+        comments.push(this.printComments)
+        return(
+            this.printComments(comments)
+        )
+        
     }
-    
 }
 export default CommentList;
