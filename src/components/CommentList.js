@@ -1,39 +1,66 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import moment from 'moment'
-import Comment from './Comments'
-import { Col, Row, Avatar } from 'antd';
+import { Input, Form} from 'antd';
 import Comments from './Comments';
+//import { element } from 'prop-types';
+const {TextArea} =Input;
 
 class CommentList extends React.Component{
 
-    printComments(comments){
+    constructor(props){
+        super(props)
+        this.printComments = this.printComments.bind(this);
+    }
 
-        let comment = comments.map(element =>{
+    printComments(){
+
+        console.log(this.props.comments)
+        let comment = this.props.comments.map(element =>{
             
             return<>
                 {element != null ?(
-                    <Comment key={element.id} author={element.name} 
-                    avatar={<Avatar src={element.URL} alt={element.name}/>} 
-                    content={element.text}/>):null}
+                    <Comments key={element.id} id={element.id} name={element.name} 
+                    URL={element.URL} text={element.content}/>):null}
             </>
         })
 
-        return <div>
+        return <>
             <li>
                 <ul>
                     {comment}
                 </ul>
             </li>
-        </div>
+            {/* <Form>
+                <Form.Item label="Write a comment">
+                    {getFielddecorator('comment',{
+                        rules: [
+                            {
+                                required: true,
+                                message: 'Please input a comment!',
+                                whitespace: true},
+                        ],
+                    })(<TextArea/>)}
+                </Form.Item>
+            </Form> */}
+        </>
         
     }
 
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+          if (!err) {
+            console.log('Received values of form: ', values);
+          }
+        });
+      };
+
     render(){
-        let comments = [];
-        comments.push(this.printComments)
+        const { getFieldDecorator } = this.props.form;
+        let data = [];
+        let comments = this.printComments(data)
         return(
-            this.printComments(comments)
+            comments
         )
         
     }
