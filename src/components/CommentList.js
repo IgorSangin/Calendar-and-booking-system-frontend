@@ -1,9 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Input, Form} from 'antd';
 import Comments from './Comments';
 //import { element } from 'prop-types';
-const {TextArea} =Input;
 
 class CommentList extends React.Component{
 
@@ -13,7 +11,6 @@ class CommentList extends React.Component{
     }
 
     printComments(){
-
         console.log(this.props.comments)
         let comment = this.props.comments.map(element =>{
             
@@ -30,18 +27,6 @@ class CommentList extends React.Component{
                     {comment}
                 </ul>
             </li>
-            {/* <Form>
-                <Form.Item label="Write a comment">
-                    {getFielddecorator('comment',{
-                        rules: [
-                            {
-                                required: true,
-                                message: 'Please input a comment!',
-                                whitespace: true},
-                        ],
-                    })(<TextArea/>)}
-                </Form.Item>
-            </Form> */}
         </>
         
     }
@@ -56,7 +41,6 @@ class CommentList extends React.Component{
       };
 
     render(){
-        const { getFieldDecorator } = this.props.form;
         let data = [];
         let comments = this.printComments(data)
         return(
