@@ -21,6 +21,10 @@ class LoginForm extends React.Component {
       if (!err) {
         //echo the values to the browser console to make sure they are correct
         console.log('Received values of form: ', values);
+        window.username = values.username
+        window.password = values.password
+        // console.log(username, password)
+    
 
         //here we should send a request to our server to post the user
 
@@ -30,6 +34,7 @@ class LoginForm extends React.Component {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization' : 'Basic ' + window.btoa(window.username + ':' + window.password)
           },
           body: JSON.stringify({values})
         }).then(res => {
