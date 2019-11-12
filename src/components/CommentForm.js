@@ -4,25 +4,85 @@ import{
     Form,
     Input,
     Button,
+    Alert,
 } from 'antd'
+import CommentList from './CommentList'
+import FormItem from 'antd/lib/form/FormItem';
+
 
 const {TextArea} = Input;
 
 class CommentForm extends React.Component {
 
+    state = {
+        confirmDirty: false,
+        addedSucessfully: false,
+        showSuccess: false,
+        getSucessfull : false,
+
+        showError: false,
+
+        errorCode: 400,
+        responseStatus : "nothing",
+        errorMessage: "",
+        data: null
+    }
+
+    async getComments(values){
+       
+    }
+
     handleSubmit = e => {
-        this.props.form.validateField((err, values)=> {
+        this.props.form.validateFieldsAndScroll((err, values)=> {
             if(!err){
                 console.log('Recieved values of form', values);
             }
+            fetch('http://localhost:3000/api/calendar/comments',{
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({values})
+            }).then(res =>{
+                if(res.ok)
+                this.setState({addedSucessfully:true})
+                else{
+                    this.setState({
+                        addedSucessfully:false,
+                        errorCode: res.status
+                    });
+
+                    return res.json()
+                }
+            }).then(data => this.checkResponse(data))
         });
     };
 
+    checkResponse = (data) => {
+        if(this.state.addedSucessfully){
+        this.props.form.resetFields();
+        this.setState({
+            showSuccess:true,
+            showError : false
+            });
+        }else{
+            //handle errors
+            this.setState({
+            errorMessage: data.message,
+            showSuccess:false,
+            showError : true,
+            responseStatus: "error"
+            });
+            } 
+    } 
+
     render(){
         const{getFieldDecorator} = this.props.form;
-        return(
+        let comments = this.getComments();
+        return( 
             <Form onSubmit={this.handleSubmit} className="comment-form">
-                <Form.Item>
+                <Form.Item label="comment" hasFeedback help={this.state.error}>
                     {getFieldDecorator('comment',{
                         rules: [{required: true, message: 'Please input a comment!'}],
                     })(
@@ -34,6 +94,8 @@ class CommentForm extends React.Component {
                         Submit Comment
                     </Button>
                 </Form.Item>
+                {this.state.showSuccess ? <Alert message="account created successfully" type="success"/> : null}
+                {this.state.showError ? <Alert message={this.state.errorMessage} type="error"/> : null}
             </Form>
         );
     }

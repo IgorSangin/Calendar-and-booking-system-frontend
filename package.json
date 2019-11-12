@@ -5,6 +5,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.3",
     "antd": "^3.23.6",
+    "koa": "^2.11.0",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "react-router-dom": "^5.1.2",

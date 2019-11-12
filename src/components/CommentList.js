@@ -1,7 +1,8 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import Comments from './Comments';
-//import { element } from 'prop-types';
+import CommentForm from './CommentForm';
+import { element } from 'prop-types';
 
 class CommentList extends React.Component{
 
@@ -45,8 +46,8 @@ class CommentList extends React.Component{
         let comments = this.printComments(data)
         return(
             comments
+
         )
-        
     }
 }
 export default CommentList;
