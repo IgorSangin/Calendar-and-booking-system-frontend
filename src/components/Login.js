@@ -5,24 +5,14 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
 class LoginForm extends React.Component {
 
-  state = {
-    confirmDirty: false,
-    addedSucessfully: false, //if the user is added successfully
-    showSuccess: false, //if should we show a successful feedback message after adding a user
-    showError: false, //if should we show an error feedback message after adding a user
-    errorCode: 400,  //to save the errorCode we recieved from the api server
-    responseStatus: "nothing",  //the validation status of the email
-    errorMessage: "",   //the error message to display to the user after server rejects action
-  };
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         //echo the values to the browser console to make sure they are correct
         console.log('Received values of form: ', values);
-        window.username = values.username
-        window.password = values.password
+        // window.username = values.username
+        // window.password = values.password
         // console.log(username, password)
     
 
@@ -34,45 +24,30 @@ class LoginForm extends React.Component {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization' : 'Basic ' + window.btoa(window.username + ':' + window.password)
+            // 'Authorization' : 'Basic ' + window.btoa(window.username + ':' + window.password)
           },
           body: JSON.stringify({values})
-        }).then(res => {
-          if(res.ok)
-            this.setState({addedSucessfully:true})
-          else
-            this.setState({
-              addedSucessfully:false,
-              errorCode: res.status
-            });
+        })
+        .then(res => {
+          console.log('Response', res)
+        })
+        .catch(err => {
+          console.log('Error', err)
+        })
+        
+        // .then(res => {
+        //   if(res.ok)
+        //     this.setState({addedSucessfully:true})
+        //   else
+        //     this.setState({
+        //       addedSucessfully:false,
+        //       errorCode: res.status
+        //     });
 
-            return res.json()
-        }).then(data => this.checkResponse(data))
+        //     return res.json()
+        // }).then(data => this.checkResponse(data))
       }
     });
-  };
-
-
-  handleConfirmBlur = e => {
-    const { value } = e.target;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
-
-  compareToFirstPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
-  };
-
-  validateToNextPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
   };
 
   checkResponse = (data) => {
