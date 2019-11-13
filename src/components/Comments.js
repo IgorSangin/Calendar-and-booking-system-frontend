@@ -15,14 +15,8 @@ class Comments extends React.Component{
             <Comment
                 key={this.props.id}
                 author={this.props.name}
-                avatar={
-                <Avatar
-                    src={this.props.URL}
-                    alt={this.props.name}
-                />
-            }
-            content={this.props.text}
-            datetime={
+                content={this.props.text}
+                datetime={
                 <Tooltip title={moment().format('DD-MM-YYYY HH:mm:ss')}>
                     <span>{moment().fromNow()}</span>
                 </Tooltip>

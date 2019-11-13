@@ -1,8 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import Comments from './Comments';
-import CommentForm from './CommentForm';
-import { element } from 'prop-types';
 
 class CommentList extends React.Component{
 
