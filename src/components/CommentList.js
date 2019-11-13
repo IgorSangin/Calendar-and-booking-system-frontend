@@ -9,16 +9,37 @@ class CommentList extends React.Component{
     constructor(props){
         super(props)
         this.printComments = this.printComments.bind(this);
+        this.state = {
+            comments :[]
+        }
+    }
+
+    componentDidMount(){
+        fetch("http://localhost:3000/api/calendar/comments")
+        .then(res => res.json())
+        .then(
+            (result) =>{
+                console.log(result)
+            this.setState({
+                isLoaded: true,
+                comments:result
+            })
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
     }
 
     printComments(){
-        console.log(this.props.comments)
-        let comment = this.props.comments.map(element =>{
-            
+        let comment = this.state.comments.map(element =>{
             return<>
                 {element != null ?(
-                    <Comments key={element.id} id={element.id} name={element.name} 
-                    URL={element.URL} text={element.content}/>):null}
+                    <Comments key={element.id} id={element.id} name={element.userId} 
+                    URL={element.url} text={element.allText}/>):null}
             </>
         })
 

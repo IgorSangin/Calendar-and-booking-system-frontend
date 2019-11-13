@@ -8,7 +8,6 @@ import {BrowserRouter as  Router, Switch, Route, Link} from 'react-router-dom';
 import { Button } from 'antd';
 
 function App() {
-
   return (
     <Router>
     <div style={{ background: '#ECECEC', padding: '30px' }}>
@@ -22,6 +21,6 @@ function App() {
     </Link>
     </div>
     </Router>
-    )
+    ) 
 }
 export default App;

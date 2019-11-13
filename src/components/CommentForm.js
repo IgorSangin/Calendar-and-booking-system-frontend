@@ -7,13 +7,16 @@ import{
     Alert,
 } from 'antd'
 import CommentList from './CommentList'
-import FormItem from 'antd/lib/form/FormItem';
 
 
 const {TextArea} = Input;
-
 class CommentForm extends React.Component {
 
+    constructor(props){
+        super(props);
+
+    }
+    
     state = {
         confirmDirty: false,
         addedSucessfully: false,
@@ -28,9 +31,7 @@ class CommentForm extends React.Component {
         data: null
     }
 
-    async getComments(values){
-       
-    }
+    
 
     handleSubmit = e => {
         this.props.form.validateFieldsAndScroll((err, values)=> {
@@ -79,9 +80,11 @@ class CommentForm extends React.Component {
 
     render(){
         const{getFieldDecorator} = this.props.form;
-        let comments = this.getComments();
         return( 
             <Form onSubmit={this.handleSubmit} className="comment-form">
+                <Form.Item>
+                    <CommentList comments={this.items}/>
+                </Form.Item>
                 <Form.Item label="comment" hasFeedback help={this.state.error}>
                     {getFieldDecorator('comment',{
                         rules: [{required: true, message: 'Please input a comment!'}],
