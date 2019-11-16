@@ -1,5 +1,5 @@
 import React from 'react';
-import 'antd/dist/antd.css';
+import '../App.css';
 import Comments from './Comments';
 
 class CommentList extends React.Component{
@@ -35,9 +35,10 @@ class CommentList extends React.Component{
     printComments(){
         let comment = this.state.comments.map(element =>{
             return<>
-                {element != null ?(
-                    <Comments key={element.id} id={element.id} name={element.userId} 
-                    URL={element.url} text={element.allText}/>):null}
+                    {element != null ?(
+                        <Comments key={element.id} id={element.id} name={element.userId} 
+                        URL={element.url} text={element.allText} date={element.dateCreated}/>):null}
+                    
             </>
         })
 

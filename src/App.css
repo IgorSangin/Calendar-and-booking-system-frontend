@@ -1,4 +1,9 @@
 @import '~antd/dist/antd.css';
+
+.Button{
+  border:none;
+  
+}
 /* .App {
   text-align: center;
 }
