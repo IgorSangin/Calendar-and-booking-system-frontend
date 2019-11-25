@@ -36,8 +36,8 @@ class CommentList extends React.Component{
         let comment = this.state.comments.map(element =>{
             return<>
                     {element != null ?(
-                        <Comments key={element.id} id={element.id} name={element.userId} 
-                        URL={element.url} text={element.allText} date={element.dateCreated}/>):null}
+                        <Comments key={element.ID} id={element.ID} name={element.userId} 
+                        URL={element.url} text={element.allText} date={element.dateCreated} dateModified={element.dateModified}/>):null}
                     
             </>
         })

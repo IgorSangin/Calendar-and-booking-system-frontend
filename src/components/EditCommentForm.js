@@ -5,17 +5,14 @@ import{
     Input,
     Button,
     Alert,
-    List
 } from 'antd'
-import CommentList from './CommentList'
-
 
 const {TextArea} = Input;
-class CommentForm extends React.Component {
-
+class EditCommentForm extends React.Component {
+    
     state = {
         confirmDirty: false,
-        addedSucessfully: false,
+        updatedSucessfully: false,
         showSuccess: false,
         getSucessfull : false,
 
@@ -24,29 +21,27 @@ class CommentForm extends React.Component {
         errorCode: 400,
         responseStatus : "nothing",
         errorMessage: "",
-        data: null
+        data: null,
     }
-
-    
 
     handleSubmit = e => {
         this.props.form.validateFieldsAndScroll((err, values)=> {
             if(!err){
                 console.log('Recieved values of form', values);
             }
-            fetch('http://localhost:3000/api/calendar/comments',{
-                method: 'POST',
+            fetch('http://localhost:3000/api/calendar/comments/'+ this.props.commentId,{
+                method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({values})
+                body: [JSON.stringify({values})]
             }).then(res =>{
                 if(res.ok)
-                this.setState({addedSucessfully:true})
+                this.setState({updatedSucessfully:true})
                 else{
                     this.setState({
-                        addedSucessfully:false,
+                        updatedSucessfully:false,
                         errorCode: res.status
                     });
 
@@ -57,7 +52,7 @@ class CommentForm extends React.Component {
     };
 
     checkResponse = (data) => {
-        if(this.state.addedSucessfully){
+        if(this.state.updatedSucessfully){
         this.props.form.resetFields();
         this.setState({
             showSuccess:true,
@@ -76,29 +71,27 @@ class CommentForm extends React.Component {
 
     render(){
         const{getFieldDecorator} = this.props.form;
+        console.log(this.props.commentId)
         return( 
-            <List>
-            <CommentList comments={this.items}/>
             <Form onSubmit={this.handleSubmit} className="comment-form">
-                    
-                <Form.Item label="comment" hasFeedback help={this.state.error}>
-                    {getFieldDecorator('comment',{
+                <Form.Item label="New Comment" hasFeedback help={this.state.error}>
+                    {getFieldDecorator('newComment',{
                         rules: [{required: true, message: 'Please input a comment!'}],
                     })(
-                        <TextArea placeholder="Write your comment here"/>
+                        <TextArea placeholder="Write your new comment here"/>
                     )}
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="comment-form-button">
-                        Submit Comment
+                        Edit Comment
                     </Button>
                 </Form.Item>
-                {this.state.showSuccess ? <Alert message="comment created successfully" type="success"/> : null}
+                {this.state.showSuccess ? <Alert message="Comment edited!" type="success"/> : null}
                 {this.state.showError ? <Alert message={this.state.errorMessage} type="error"/> : null}
             </Form>
-            </List>
+
         );
     }
-}const WrappedCommentForm = Form.create({name: 'commentForm'})(CommentForm);
+}const WrappedCommentForm = Form.create({name:'commentForm'})(EditCommentForm);
 
 export default WrappedCommentForm
