@@ -1,9 +1,17 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Alert, Button, Checkbox } from 'antd';
 
 class LoginForm extends React.Component {
+
+  state = {
+    loggedSucessfully: false, //if the user is logged successfully
+    showSuccess: false, //if should we show a successful feedback message after user logged in
+    showError: false, //if should we show an error feedback message after user logged in
+    errorCode: 400,  //to save the errorCode we recieved from the api server
+    errorMessage: ""   //the error message to display to the user after server rejects action
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -11,9 +19,8 @@ class LoginForm extends React.Component {
       if (!err) {
         //echo the values to the browser console to make sure they are correct
         console.log('Received values of form: ', values);
-        // window.username = values.username
-        // window.password = values.password
-        // console.log(username, password)
+        window.username = values.username
+        window.password = values.password
     
 
         //here we should send a request to our server to post the user
@@ -24,35 +31,27 @@ class LoginForm extends React.Component {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            // 'Authorization' : 'Basic ' + window.btoa(window.username + ':' + window.password)
+            'Authorization' : 'Basic ' + window.btoa(window.username + ':' + window.password)
           },
           body: JSON.stringify({values})
-        })
-        .then(res => {
-          console.log('Response', res)
-        })
-        .catch(err => {
-          console.log('Error', err)
-        })
-        
-        // .then(res => {
-        //   if(res.ok)
-        //     this.setState({addedSucessfully:true})
-        //   else
-        //     this.setState({
-        //       addedSucessfully:false,
-        //       errorCode: res.status
-        //     });
+        }).then(res => {
+          if(res.ok)
+            this.setState({loggedSucessfully:true})
+          else
+            this.setState({
+              loggedSucessfully:false,
+              errorCode: res.status
+            });
 
-        //     return res.json()
-        // }).then(data => this.checkResponse(data))
+            return res.json()
+        }).then(data => this.checkResponse(data))
       }
     });
   };
 
   checkResponse = (data) => {
 
-    if(this.state.addedSucessfully){
+    if(this.state.loggedSucessfully){
       this.props.form.resetFields();
       this.setState({
         showSuccess:true,
@@ -65,7 +64,6 @@ class LoginForm extends React.Component {
         errorMessage: data.message,
         showSuccess:false,
         showError : true, 
-        responseStatus: "error"
       });
     }
   }
@@ -114,6 +112,8 @@ class LoginForm extends React.Component {
           </Button>
           Or <a href="/Signup">register now!</a>
         </Form.Item>
+        {this.state.showSuccess ? <Alert message="logon succccccccssssssseffful" type="success" /> :null}
+        {this.state.showError ? <Alert message={this.state.errorMessage} type="error" /> :null}
       </Form>
     );
   }
