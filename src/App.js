@@ -1,21 +1,35 @@
 
-import React, {Component} from 'react';
-import {BrowserRouter, Route} from 'react-router-dom'
+import React from 'react';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import CommentForm from './components/CommentForm'
 import './App.css';
+//import 'antd/dist/antd.css';
+import {BrowserRouter as  Router, Switch, Route, Link} from 'react-router-dom';
+import { Button } from 'antd';
+import CommentList from './components/CommentList';
 
-class App extends Component {
-  render() {
-    return(
-      <BrowserRouter>
-        <div className="App">
-          <Route exact path='/' component={Login} />
-          <Route path='/Signup' component={Signup} />
-        </div>
-      </BrowserRouter>
-    )
-  }
+
+
+
+function App() {
+  return (
+    <Router>
+    <div style={{ background: '#ECECEC', padding: '30px' }}>
+    <Link to="/signup">
+    <Button>Register</Button>
+    </Link>
+    <Link to="/comments">
+    <Button>Comment Page</Button>
+    </Link>
+    </div>
+    <Switch>
+    <Route exact path='/' component={Login} />
+    <Route exact path="/comments" component={CommentForm}/>
+    <Route exact path="/signup" component={Signup}/>
+    
+    </Switch>
+    </Router>
+    ) 
 }
-
 export default App;
