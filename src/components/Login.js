@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { Form, Icon, Input, Alert, Button, Checkbox } from 'antd';
 
@@ -9,8 +10,9 @@ class LoginForm extends React.Component {
     loggedSucessfully: false, //if the user is logged successfully
     showSuccess: false, //if should we show a successful feedback message after user logged in
     showError: false, //if should we show an error feedback message after user logged in
-    errorCode: 400,  //to save the errorCode we recieved from the api server
-    errorMessage: ""   //the error message to display to the user after server rejects action
+    errorCode: 401,  //to save the errorCode we recieved from the api server
+    errorMessage: "",   //the error message to display to the user after server rejects action
+    redirect: false  //to redirect after successful login
   };
 
   handleSubmit = e => {
@@ -36,11 +38,13 @@ class LoginForm extends React.Component {
           body: JSON.stringify({values})
         }).then(res => {
           if(res.ok)
-            this.setState({loggedSucessfully:true})
+            this.setState({
+              loggedSucessfully:true,
+            })
           else
             this.setState({
               loggedSucessfully:false,
-              errorCode: res.status
+              showError : true
             });
 
             return res.json()
@@ -52,16 +56,16 @@ class LoginForm extends React.Component {
   checkResponse = (data) => {
 
     if(this.state.loggedSucessfully){
-      this.props.form.resetFields();
       this.setState({
         showSuccess:true,
-        showError : false
+        showError : false,
+        redirect:true,
       });
     }
     else{
       //handle errors
+      this.props.form.resetFields();
       this.setState({
-        errorMessage: data.message,
         showSuccess:false,
         showError : true, 
       });
@@ -112,8 +116,9 @@ class LoginForm extends React.Component {
           </Button>
           Or <a href="/Signup">register now!</a>
         </Form.Item>
-        {this.state.showSuccess ? <Alert message="logon succccccccssssssseffful" type="success" /> :null}
-        {this.state.showError ? <Alert message={this.state.errorMessage} type="error" /> :null}
+        {this.state.showSuccess ? <Alert message="Success. Redirecting..." type="success" /> :null}
+        {this.state.showError ? <Alert message="Invalid credentials" type="error" /> :null}
+        {this.state.redirect ? <Redirect to='/test' /> :null}
       </Form>
     );
   }

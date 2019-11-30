@@ -16,7 +16,7 @@ class RegistrationForm extends React.Component {
     showSuccess: false, //if should we show a successful feedback message after adding a user
     showError: false, //if should we show an error feedback message after adding a user
     errorCode: 400,  //to save the errorCode we recieved from the api server
-    responseStatus: "nothing",  //the validation status of the email
+    responseStatus: "nothing",  //the validation status of the user
     errorMessage: ""   //the error message to display to the user after server rejects action
   };
 
@@ -178,7 +178,7 @@ class RegistrationForm extends React.Component {
           <Button type="primary" htmlType="submit">
             Register
           </Button>
-          Or <a href="/">login here if you already have an account</a>
+          Already have an account? <a href="/">Login here</a>
         </Form.Item>
         {this.state.showSuccess ? <Alert message="account created successfully" type="success" /> :null}
         {this.state.showError ? <Alert message={this.state.errorMessage} type="error" /> :null}
