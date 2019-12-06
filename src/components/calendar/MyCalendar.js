@@ -20,7 +20,8 @@ class MyCalendar extends React.Component {
       { title: "Play games", id: "2" },
       { title: "Walk the dog", id: "3" },
       { title: "Do cleaning", id: "4" },
-    ]
+    ],
+    editable:true  //to set a time for the event
   };
 
   // Making the activities draggable
@@ -82,6 +83,7 @@ class MyCalendar extends React.Component {
             }}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             activities={this.state.activities}
+            editable={this.state.editable}
             dateClick={this.handleDateClick}
           />
         </div>
