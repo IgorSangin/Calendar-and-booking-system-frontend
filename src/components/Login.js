@@ -2,6 +2,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
+import '../App.css';
 import { Form, Icon, Input, Alert, Button, Checkbox } from 'antd';
 
 class LoginForm extends React.Component {
@@ -22,8 +23,7 @@ class LoginForm extends React.Component {
         //echo the values to the browser console to make sure they are correct
         console.log('Received values of form: ', values);
         window.username = values.username
-        window.password = values.password
-    
+        window.password = values.password   
 
         //here we should send a request to our server to post the user
 
@@ -74,8 +74,34 @@ class LoginForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+
+    //this code will handle form responsivness on small devices
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+      },
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0,
+        },
+        sm: {
+          span: 16,
+          offset: 8,
+        },
+      },
+    };
+
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+    <div className="centered-form">
+      <Form {...formItemLayout}  onSubmit={this.handleSubmit} className="login-form">
         <Form.Item label="Username">
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
@@ -103,14 +129,11 @@ class LoginForm extends React.Component {
             />,
           )}
         </Form.Item>
-        <Form.Item>
+        <Form.Item {...tailFormItemLayout}>
           {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="">
-            Forgot password
-          </a>
           <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
@@ -118,8 +141,9 @@ class LoginForm extends React.Component {
         </Form.Item>
         {this.state.showSuccess ? <Alert message="Success. Redirecting..." type="success" /> :null}
         {this.state.showError ? <Alert message="Invalid credentials" type="error" /> :null}
-        {this.state.redirect ? <Redirect to='/test' /> :null}
+        {this.state.redirect ?  <Redirect to='/calendar' /> :null}
       </Form>
+    </div>
     );
   }
 }

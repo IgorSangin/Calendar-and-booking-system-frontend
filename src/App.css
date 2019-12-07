@@ -3,3 +3,16 @@
 .ant-btn-link{
   color: black;
 }
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 150px;
+}

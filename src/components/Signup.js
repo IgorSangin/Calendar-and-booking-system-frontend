@@ -1,10 +1,10 @@
 import React from 'react';
 import 'antd/dist/antd.css';
+import '../App.css';
 import {
   Form,
   Input,
   Alert,
-  Checkbox,
   Button
 } from 'antd';
 
@@ -124,65 +124,59 @@ class RegistrationForm extends React.Component {
 
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="Username">
-          {getFieldDecorator('username', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your username!',
-                whitespace: true },
+      <div className="centered-form">
+        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+          <Form.Item label="Username">
+            {getFieldDecorator('username', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your username!',
+                  whitespace: true },
+                ],
+            })(<Input />)}
+          </Form.Item>
+          <Form.Item label="Password" hasFeedback>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+                {
+                  min: 6,
+                  message: 'Password should be at least 6 characters long!',
+                },
+                {
+                  validator: this.validateToNextPassword,
+                },
               ],
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-              {
-                min: 6,
-                message: 'password should be at least 6 characters long!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(<Input.Password />)}
-        </Form.Item>
-        <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('passwordConfirmation', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
-          })(
-            <Checkbox>
-              I have read the <a href="">agreement</a>
-            </Checkbox>,
-          )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            Register
-          </Button>
-          Already have an account? <a href="/">Login here</a>
-        </Form.Item>
-        {this.state.showSuccess ? <Alert message="account created successfully" type="success" /> :null}
-        {this.state.showError ? <Alert message={this.state.errorMessage} type="error" /> :null}
-      </Form>
+            })(<Input.Password />)}
+          </Form.Item>
+          <Form.Item label="Confirm Password" hasFeedback>
+            {getFieldDecorator('passwordConfirmation', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please confirm your password!',
+                },
+                {
+                  validator: this.compareToFirstPassword,
+                },
+              ],
+            })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+          </Form.Item>
+          <Form.Item {...tailFormItemLayout}>
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
+            <br />
+            Already have an account? <a href="/">Login here</a>
+          </Form.Item>
+          {this.state.showSuccess ? <Alert message="Account created successfully" type="success" /> :null}
+          {this.state.showError ? <Alert message={this.state.errorMessage} type="error" /> :null}
+        </Form>
+      </div>
     );
   }
 }

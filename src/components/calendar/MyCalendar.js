@@ -1,3 +1,6 @@
+//main calendar page
+//created with FullCalendar plugin
+
 import React from "react";
 import { Col, Row } from "antd";
 import ActivityForm from "./ActivityForm";
@@ -22,6 +25,7 @@ class MyCalendar extends React.Component {
     editable:true  //to be able to set a time for the activity
   };
 
+  //add new activity
   addActivity = activity => {
     this.setState(state => ({
       activities: [activity, ...state.activities]
