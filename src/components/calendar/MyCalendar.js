@@ -2,7 +2,6 @@
 //created with FullCalendar plugin
 
 import React from "react";
-import { Col, Row } from "antd";
 import ActivityForm from "./ActivityForm";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -52,16 +51,8 @@ class MyCalendar extends React.Component {
     return (
       <div className="page">
         <div className="page-top">
-        <Row>
-          <Col lg={3} sm={3} md={3}>
             <div
               id="activities-box"
-              style={{
-                padding: "10px",
-                width: "80%",
-                height: "auto",
-                maxHeight: "-webkit-fill-available"
-              }}
             >
               <p align="center">
                 <strong>Activities</strong>
@@ -78,8 +69,6 @@ class MyCalendar extends React.Component {
                 </div>
               ))}
             </div>
-          </Col>
-        </Row>
         </div>
         <div className="calendar">
         <h1 align="center" style={{color: "red"}}>Create an activity, then drag it on the calendar</h1>
