@@ -1,5 +1,8 @@
+//main calendar page
+//created with FullCalendar plugin
+
 import React from "react";
-import { Col, Row } from "antd";
+import ActivityForm from "./ActivityForm";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -15,13 +18,17 @@ import "@fullcalendar/timegrid/main.css";
 class MyCalendar extends React.Component {
 
   state = {
-    activities: [
-      { title: "Go shopping", id: "1" },
-      { title: "Play games", id: "2" },
-      { title: "Walk the dog", id: "3" },
-      { title: "Do cleaning", id: "4" },
+    activities : [
+      { title: "", id: "" },
     ],
-    editable:true  //to set a time for the event
+    editable:true  //to be able to set a time for the activity
+  };
+
+  //add new activity
+  addActivity = activity => {
+    this.setState(state => ({
+      activities: [activity, ...state.activities]
+    }));
   };
 
   // Making the activities draggable
@@ -44,36 +51,27 @@ class MyCalendar extends React.Component {
     return (
       <div className="page">
         <div className="page-top">
-        <Row>
-          <Col lg={3} sm={3} md={3}>
             <div
               id="activities-box"
-              style={{
-                padding: "10px",
-                width: "80%",
-                height: "auto",
-                maxHeight: "-webkit-fill-available"
-              }}
             >
               <p align="center">
                 <strong>Activities</strong>
               </p>
+              <ActivityForm onSubmit={this.addActivity} />
               {this.state.activities.map(activity => (
                 <div
                   className="fc-event"
-                  title={activity.title}
+                  title={activity.input}
                   data={activity.id}
                   key={activity.id}
                 >
-                  {activity.title}
+                  {activity.input}
                 </div>
               ))}
             </div>
-          </Col>
-        </Row>
         </div>
         <div className="calendar">
-        <h1 align="center" style={{color: "red"}}>Click on a date to add an activity</h1>
+        <h1 align="center" style={{color: "red"}}>Create an activity, then drag it on the calendar</h1>
           <FullCalendar
             defaultView="dayGridMonth"
             header={{
@@ -90,20 +88,5 @@ class MyCalendar extends React.Component {
       </div>
     );
   }
-
-
-  handleDateClick = arg => {
-    if (window.confirm("Would you like to add an activity to " + arg.dateStr + " ?")) {
-      this.setState({
-        // add new activity data
-        activities: this.state.activities.concat({
-          // creates a new array
-          title: "My activity",
-          start: arg.date,
-          allDay: arg.allDay
-        })
-      });
-    }
-  };
 }
 export default MyCalendar;
