@@ -6,20 +6,23 @@ class CommentList extends React.Component{
 
     constructor(props){
         super(props)
+        //binds the function to the component
         this.printComments = this.printComments.bind(this);
+        //creates an array to store the comments from the fetch request
         this.state = {
             comments :[]
         }
     }
 
     componentDidMount(){
+        //a fetch request without a method defaults to GET as this one does
         fetch("http://localhost:3000/api/calendar/comments")
         .then(res => res.json())
         .then(
             (result) =>{
-                console.log(result)
             this.setState({
                 isLoaded: true,
+                //saves the result to the comments array
                 comments:result
             })
             },
@@ -33,6 +36,7 @@ class CommentList extends React.Component{
     }
 
     printComments(){
+        //maps the values from comments to Comments component
         let comment = this.state.comments.map(element =>{
             return<>
                     {element != null ?(
@@ -42,30 +46,21 @@ class CommentList extends React.Component{
             </>
         })
 
+        //returns comments in an unordered list
         return <>
-            <li>
                 <ul>
                     {comment}
                 </ul>
-            </li>
+
         </>
         
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-          if (!err) {
-            console.log('Received values of form: ', values);
-          }
-        });
-      };
-
     render(){
-        let data = [];
-        let comments = this.printComments(data)
+        let comments = this.printComments()
         return(
-            comments
+            <li>{comments}</li>
+            
 
         )
     }

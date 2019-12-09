@@ -34,12 +34,14 @@ class CommentForm extends React.Component {
             if(!err){
                 console.log('Recieved values of form', values);
             }
+            //POST fetch request
             fetch('http://localhost:3000/api/calendar/comments',{
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
+                //takes the value from the comment box and sends it to backend in the request
                 body: JSON.stringify({values})
             }).then(res =>{
                 if(res.ok)
@@ -78,7 +80,9 @@ class CommentForm extends React.Component {
         const{getFieldDecorator} = this.props.form;
         return( 
             <List>
+                {/* renders component that displays comments */}
             <CommentList comments={this.items}/>
+            {/* When this form is submitted it calls the handle submit function */}
             <Form onSubmit={this.handleSubmit} className="comment-form">
                     
                 <Form.Item label="comment" hasFeedback help={this.state.error}>

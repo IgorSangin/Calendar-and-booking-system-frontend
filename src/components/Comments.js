@@ -7,7 +7,6 @@ import {
     Button,
     List
 } from 'antd';
-//import {BrowserRouter as  Router, Switch, Route, Link} from 'react-router-dom';
 import EditCommentForm from './EditCommentForm'
 
 
@@ -30,14 +29,18 @@ class Comments extends React.Component{
 
     displayEditForm = () =>{
         this.setState({
+            //closes or opens the edit form depending on current state
             displayEdit: !this.state.displayEdit
         })
     }
 
     render(){
+        //create a new Date objects
         let d = new Date();
+        //if the prop is not empty execute this first if statement
         if(this.props.dateModified != null){
             d = this.props.dateModified;
+            //removes Z and T from date
             d = d.toLocaleString().replace('Z', '').replace('T', ' ');
             d = "Edited " + d;
         }else{
@@ -45,7 +48,7 @@ class Comments extends React.Component{
             d = d.toLocaleString().replace('Z', '').replace('T', ' ');
             d = "Created " + d;
         }
-        
+        //if statement when edit form is being displayed
         if(this.state.displayEdit){
             return <Comment
             key={this.props.id}
