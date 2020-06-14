@@ -1,6 +1,6 @@
 # Calendar-and-booking-system-frontend
 Third year project for Coventry University. Authors: Igor Sangin and Carl Egonu.  
-Repository moved from Coventry GitHub account.  
+Repository moved from Coventry University GitHub account.  
 Calendar made with FullCalendar plugin.
    
 The parts I was responsible in the project are demonstrated in this video: https://www.youtube.com/watch?v=7bSGngiG56U
