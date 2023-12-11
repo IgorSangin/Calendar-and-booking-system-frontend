@@ -7,7 +7,7 @@
     "@fullcalendar/interaction": "4.2.0",
     "@fullcalendar/react": "4.2.0",
     "@fullcalendar/timegrid": "4.2.0",
-    "@koa/cors": "^2.2.3",
+    "@koa/cors": "^5.0.0",
     "antd": "^3.23.6",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
